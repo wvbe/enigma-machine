@@ -30,7 +30,7 @@ export class Plugboard {
 	/**
 	 * Encode a signal according to the (lack of) plugging.
 	 */
-	public encode(a: number) {
+	public encode(a: number): number {
 		const b = this.pairs[a];
 		return b === undefined ? a : b;
 	}

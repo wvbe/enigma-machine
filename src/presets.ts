@@ -1,8 +1,33 @@
-import { Rotor } from './Rotor';
+import { Rotor, Trivia } from './Rotor';
+
+function createRotorFromAlphabet(
+	coding: string,
+	notches: string,
+	trivia: Trivia,
+	alphabet: string = 'abcdefghijklmnopqrstuvwxyz'
+) {
+	const codingNumbers = coding
+		.toLowerCase()
+		.split('')
+		.map(letter => alphabet.indexOf(letter));
+	const notchesNumbers = !notches
+		? []
+		: notches
+				.toLowerCase()
+				.split('')
+				.map(letter => alphabet.indexOf(letter));
+	return new Rotor(codingNumbers, notchesNumbers, 0, { alphabet, ...trivia });
+}
 
 // Terms:
-//   ETW - Eintrittzwalze - Entry disk
-//   UKW - Umkehrwalze    - Reflector
+//   ETW - Eintrittzwalze                 - Entry disk
+//   UKW - Umkehrwalze                    - Reflector
+//         Zusatzwalze, Griechenwalzen    - Greek wheel
+//         Walzenlage                     - Wheel order
+//         Ringstellung                   - Ring setting
+//         Grundstellung                  - Start position
+//         Steckern                       - Plugs
+//
 
 // Sources:
 //   https://piotte13.github.io/enigma-cipher/
@@ -14,56 +39,56 @@ import { Rotor } from './Rotor';
 // did not rotate.
 
 // Wehrmacht, Luftwaffe, Kriegsmarine
-export const I = Rotor.fromAlphabet('EKMFLGDQVZNTOWYHXUSPAIBRCJ', 'Q', {
+export const I = createRotorFromAlphabet('EKMFLGDQVZNTOWYHXUSPAIBRCJ', 'Q', {
 	name: 'I',
 	model: 'Enigma I',
 	year: 1930
 });
 
 // Wehrmacht, Luftwaffe, Kriegsmarine
-export const II = Rotor.fromAlphabet('AJDKSIRUXBLHWTMCQGZNPYFVOE', 'E', {
+export const II = createRotorFromAlphabet('AJDKSIRUXBLHWTMCQGZNPYFVOE', 'E', {
 	name: 'II',
 	model: 'Enigma I',
 	year: 1930
 });
 
 // Wehrmacht, Luftwaffe, Kriegsmarine
-export const III = Rotor.fromAlphabet('BDFHJLCPRTXVZNYEIWGAKMUSQO', 'V', {
+export const III = createRotorFromAlphabet('BDFHJLCPRTXVZNYEIWGAKMUSQO', 'V', {
 	name: 'III',
 	model: 'Enigma I',
 	year: 1930
 });
 
 // Wehrmacht, Luftwaffe, Kriegsmarine
-export const IV = Rotor.fromAlphabet('ESOVPZJAYQUIRHXLNFTGKDCMWB', 'J', {
+export const IV = createRotorFromAlphabet('ESOVPZJAYQUIRHXLNFTGKDCMWB', 'J', {
 	name: 'IV',
 	model: 'M3 Army',
 	year: 1938
 });
 
 // Wehrmacht, Luftwaffe, Kriegsmarine
-export const V = Rotor.fromAlphabet('VZBRGITYUPSDNHLXAWMJQOFECK', 'Z', {
+export const V = createRotorFromAlphabet('VZBRGITYUPSDNHLXAWMJQOFECK', 'Z', {
 	name: 'V',
 	model: 'M3 Army',
 	year: 1938
 });
 
 // Kriegsmarine
-export const VI = Rotor.fromAlphabet('JPGVOUMFYQBENHZRDKASXLICTW', 'ZM', {
+export const VI = createRotorFromAlphabet('JPGVOUMFYQBENHZRDKASXLICTW', 'ZM', {
 	name: 'VI',
 	model: 'M3 & M4 Naval (FEB 1942)',
 	year: 1939
 });
 
 // Kriegsmarine
-export const VII = Rotor.fromAlphabet('NZJHGRCXMYSWBOUFAIVLPEKQDT', 'ZM', {
+export const VII = createRotorFromAlphabet('NZJHGRCXMYSWBOUFAIVLPEKQDT', 'ZM', {
 	name: 'VII',
 	model: 'M3 & M4 Naval (FEB 1942)',
 	year: 1939
 });
 
 // Kriegsmarine
-export const VIII = Rotor.fromAlphabet('FKQHTLXOCBJSPDZRAMEWNIUYGV', 'ZM', {
+export const VIII = createRotorFromAlphabet('FKQHTLXOCBJSPDZRAMEWNIUYGV', 'ZM', {
 	name: 'VIII',
 	model: 'M3 & M4 Naval (FEB 1942)',
 	year: 1939
@@ -71,7 +96,7 @@ export const VIII = Rotor.fromAlphabet('FKQHTLXOCBJSPDZRAMEWNIUYGV', 'ZM', {
 
 // Kriegsmarine (U-boat division only)
 // This rotor does not rotate!
-export const Beta = Rotor.fromAlphabet('LEYJVCNIXWPBQMDRTAKZGFUHOS', '', {
+export const Beta = createRotorFromAlphabet('LEYJVCNIXWPBQMDRTAKZGFUHOS', '', {
 	name: 'Beta',
 	model: 'U-boat Enigma M4 R2',
 	year: 1941
@@ -79,55 +104,55 @@ export const Beta = Rotor.fromAlphabet('LEYJVCNIXWPBQMDRTAKZGFUHOS', '', {
 
 // Kriegsmarine (U-boat division only)
 // This rotor does not rotate!
-export const Gamma = Rotor.fromAlphabet('FSOKANUERHMBTIYCWLQPZXVGJD', '', {
+export const Gamma = createRotorFromAlphabet('FSOKANUERHMBTIYCWLQPZXVGJD', '', {
 	name: 'Gamma',
 	model: 'U-boat EnigmaM4 R2',
 	year: 1942
 });
 
 // Wehrmacht, Luftwaffe
-export const UKW_A = Rotor.fromAlphabet('EJMZALYXVBWFCRQUONTSPIKHGD', '', {
+export const UKW_A = createRotorFromAlphabet('EJMZALYXVBWFCRQUONTSPIKHGD', '', {
 	name: 'UKW A'
 });
 
 // Wehrmacht, Luftwaffe, Kriegsmarine (but not U-boat division)
-export const UKW_B = Rotor.fromAlphabet('YRUHQSLDPXNGOKMIEBFZCWVJAT', '', {
+export const UKW_B = createRotorFromAlphabet('YRUHQSLDPXNGOKMIEBFZCWVJAT', '', {
 	name: 'UKW B'
 });
 
 // Kriegsmarine (U-boat division only)
-export const UKW_B_U = Rotor.fromAlphabet('ENKQAUYWJICOPBLMDXZVFTHRGS', '', {
+export const UKW_B_U = createRotorFromAlphabet('ENKQAUYWJICOPBLMDXZVFTHRGS', '', {
 	name: 'UKW B'
 });
 
 // Wehrmacht, Luftwaffe, Kriegsmarine (but not U-boat division)
-export const UKW_C = Rotor.fromAlphabet('FVPJIAOYEDRZXWGCTKUQSBNMHL', '', {
+export const UKW_C = createRotorFromAlphabet('FVPJIAOYEDRZXWGCTKUQSBNMHL', '', {
 	name: 'UKW C'
 });
 
 // Kriegsmarine (U-boat division only)
-export const UKW_C_U = Rotor.fromAlphabet('RDOBJNTKVEHMLFCWZAXGYIPSUQ', '', {
+export const UKW_C_U = createRotorFromAlphabet('RDOBJNTKVEHMLFCWZAXGYIPSUQ', '', {
 	name: 'UKW C'
 });
 
 // Commercial Enigma A26, aka. Enigma D
 // ETW: QWERTZUIOASDFGHJKPYXCVBNML
-export const A26_I = Rotor.fromAlphabet('LPGSZMHAEOQKVXRFYBUTNICJDW', 'Y', {
+export const A26_I = createRotorFromAlphabet('LPGSZMHAEOQKVXRFYBUTNICJDW', 'Y', {
 	name: 'I',
 	model: 'Commercial Enigma A26',
 	year: 1926
 });
-export const A26_II = Rotor.fromAlphabet('SLVGBTFXJQOHEWIRZYAMKPCNDU', 'E', {
+export const A26_II = createRotorFromAlphabet('SLVGBTFXJQOHEWIRZYAMKPCNDU', 'E', {
 	name: 'II',
 	model: 'Commercial Enigma A26',
 	year: 1926
 });
-export const A26_III = Rotor.fromAlphabet('CJGDPSHKTURAWZXFMYNQOBVLIE', 'N', {
+export const A26_III = createRotorFromAlphabet('CJGDPSHKTURAWZXFMYNQOBVLIE', 'N', {
 	name: 'III',
 	model: 'Commercial Enigma A26',
 	year: 1926
 });
-export const A26_UKW = Rotor.fromAlphabet('IMETCGFRAYSQBZXWLHKDVUPOJN', '', {
+export const A26_UKW = createRotorFromAlphabet('IMETCGFRAYSQBZXWLHKDVUPOJN', '', {
 	name: 'UKW',
 	model: 'Commercial Enigma A26',
 	year: 1926
@@ -135,77 +160,85 @@ export const A26_UKW = Rotor.fromAlphabet('IMETCGFRAYSQBZXWLHKDVUPOJN', '', {
 
 // Swiss Enigma K, also known as Swiss-K
 // ETW: QWERTZUIOASDFGHJKPYXCVBNML
-export const SwissI = Rotor.fromAlphabet('PEZUOHXSCVFMTBGLRINQJWAYDK', 'Y', {
+export const SwissI = createRotorFromAlphabet('PEZUOHXSCVFMTBGLRINQJWAYDK', 'Y', {
 	name: 'I',
 	model: 'Swiss Enigma K variant'
 });
-export const SwissII = Rotor.fromAlphabet('ZOUESYDKFWPCIQXHMVBLGNJRAT', 'E', {
+export const SwissII = createRotorFromAlphabet('ZOUESYDKFWPCIQXHMVBLGNJRAT', 'E', {
 	name: 'II',
 	model: 'Swiss Enigma K variant'
 });
-export const SwissIII = Rotor.fromAlphabet('EHRVXGAOBQUSIMZFLYNWKTPDJC', 'N', {
+export const SwissIII = createRotorFromAlphabet('EHRVXGAOBQUSIMZFLYNWKTPDJC', 'N', {
 	name: 'III',
 	model: 'Swiss Enigma K variant'
 });
-export const SwissUKW = Rotor.fromAlphabet('IMETCGFRAYSQBZXWLHKDVUPOJN', '', {
+export const SwissUKW = createRotorFromAlphabet('IMETCGFRAYSQBZXWLHKDVUPOJN', '', {
 	name: 'UKW',
 	model: 'Swiss Enigma K variant'
 });
 
 // Enigma G, aka. Zählwerk Enigma A28 and G31
 // ETW: QWERTZUIOASDFGHJKPYXCVBNML
-export const Zahlwerk_I = Rotor.fromAlphabet('LPGSZMHAEOQKVXRFYBUTNICJDW', 'SUVWZABCEFGIKLOPQ', {
-	name: 'I',
-	model: 'Zählwerk Enigma A28 & G31'
-});
-export const Zahlwerk_II = Rotor.fromAlphabet('SLVGBTFXJQOHEWIRZYAMKPCNDU', 'STVYZACDFGHKMNQ', {
-	name: 'II',
-	model: 'Zählwerk Enigma A28 & G31'
-});
-export const Zahlwerk_III = Rotor.fromAlphabet('CJGDPSHKTURAWZXFMYNQOBVLIE', 'UWXAEFHKMNR', {
+export const Zahlwerk_I = createRotorFromAlphabet(
+	'LPGSZMHAEOQKVXRFYBUTNICJDW',
+	'SUVWZABCEFGIKLOPQ',
+	{
+		name: 'I',
+		model: 'Zählwerk Enigma A28 & G31'
+	}
+);
+export const Zahlwerk_II = createRotorFromAlphabet(
+	'SLVGBTFXJQOHEWIRZYAMKPCNDU',
+	'STVYZACDFGHKMNQ',
+	{
+		name: 'II',
+		model: 'Zählwerk Enigma A28 & G31'
+	}
+);
+export const Zahlwerk_III = createRotorFromAlphabet('CJGDPSHKTURAWZXFMYNQOBVLIE', 'UWXAEFHKMNR', {
 	name: 'III',
 	model: 'Zählwerk Enigma A28 & G31'
 });
-export const Zahlwerk_UKW = Rotor.fromAlphabet('IMETCGFRAYSQBZXWLHKDVUPOJN', '', {
+export const Zahlwerk_UKW = createRotorFromAlphabet('IMETCGFRAYSQBZXWLHKDVUPOJN', '', {
 	name: 'UKW',
 	model: 'Zählwerk Enigma A28 & G31'
 });
 
 // Enigma T, Tirpitz, Japanese Enigma
 // ETW: KZROUQHYAIGBLWVSTDXFPNMCJE
-export const Tirpitz_I = Rotor.fromAlphabet('KPTYUELOCVGRFQDANJMBSWHZXI', 'WZEKQ', {
+export const Tirpitz_I = createRotorFromAlphabet('KPTYUELOCVGRFQDANJMBSWHZXI', 'WZEKQ', {
 	name: 'I',
 	model: 'Tirpitz'
 });
-export const Tirpitz_II = Rotor.fromAlphabet('UPHZLWEQMTDJXCAKSOIGVBYFNR', 'WZFLR', {
+export const Tirpitz_II = createRotorFromAlphabet('UPHZLWEQMTDJXCAKSOIGVBYFNR', 'WZFLR', {
 	name: 'II',
 	model: 'Tirpitz'
 });
-export const Tirpitz_III = Rotor.fromAlphabet('QUDLYRFEKONVZAXWHMGPJBSICT', 'WZEKQ', {
+export const Tirpitz_III = createRotorFromAlphabet('QUDLYRFEKONVZAXWHMGPJBSICT', 'WZEKQ', {
 	name: 'III',
 	model: 'Tirpitz'
 });
-export const Tirpitz_IV = Rotor.fromAlphabet('CIWTBKXNRESPFLYDAGVHQUOJZM', 'WZFLR', {
+export const Tirpitz_IV = createRotorFromAlphabet('CIWTBKXNRESPFLYDAGVHQUOJZM', 'WZFLR', {
 	name: 'IV',
 	model: 'Tirpitz'
 });
-export const Tirpitz_V = Rotor.fromAlphabet('UAXGISNJBVERDYLFZWTPCKOHMQ', 'YCFKR', {
+export const Tirpitz_V = createRotorFromAlphabet('UAXGISNJBVERDYLFZWTPCKOHMQ', 'YCFKR', {
 	name: 'V',
 	model: 'Tirpitz'
 });
-export const Tirpitz_VI = Rotor.fromAlphabet('XFUZGALVHCNYSEWQTDMRBKPIOJ', 'XEIMQ', {
+export const Tirpitz_VI = createRotorFromAlphabet('XFUZGALVHCNYSEWQTDMRBKPIOJ', 'XEIMQ', {
 	name: 'VI',
 	model: 'Tirpitz'
 });
-export const Tirpitz_VII = Rotor.fromAlphabet('BJVFTXPLNAYOZIKWGDQERUCHSM', 'YCFKR', {
+export const Tirpitz_VII = createRotorFromAlphabet('BJVFTXPLNAYOZIKWGDQERUCHSM', 'YCFKR', {
 	name: 'VII',
 	model: 'Tirpitz'
 });
-export const Tirpitz_VIII = Rotor.fromAlphabet('YMTPNZHWKODAJXELUQVGCBISFR', 'XEIMQ', {
+export const Tirpitz_VIII = createRotorFromAlphabet('YMTPNZHWKODAJXELUQVGCBISFR', 'XEIMQ', {
 	name: 'VIII',
 	model: 'Tirpitz'
 });
-export const Tirpitz_UKW = Rotor.fromAlphabet('GEKPBTAUMOCNILJDXZYFHWVQSR', '', {
+export const Tirpitz_UKW = createRotorFromAlphabet('GEKPBTAUMOCNILJDXZYFHWVQSR', '', {
 	name: 'UKW',
 	model: 'Tirpitz'
 });

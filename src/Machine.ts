@@ -1,4 +1,4 @@
-import Event from './Event';
+import { Event } from './Event';
 import { Plugboard } from './Plugboard';
 import { Rotor } from './Rotor';
 

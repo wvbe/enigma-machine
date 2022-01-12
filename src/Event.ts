@@ -1,4 +1,4 @@
-export default class Event<Args extends unknown[]> {
+export class Event<Args extends unknown[]> {
 	private callbacks: ((...args: Args) => void)[] = [];
 
 	on(callback: (...args: Args) => void): () => void {
