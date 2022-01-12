@@ -1,6 +1,6 @@
 {
 	"name": "@wvbe/enigma-machine",
-	"version": "1.0.1",
+	"version": "1.0.2",
 	"description": "A configurable Enigma cryptographic machine.",
 	"repository": "wvbe/enigma-machine",
 	"author": {
@@ -16,7 +16,7 @@
 	"main": "dist/index.js",
 	"typings": "dist/index.d.ts",
 	"scripts": {
-		"prepare": "npm run build",
+		"prepublish": "npm run build",
 		"format": "prettier --write src",
 		"build": "rm -rf dist & tsc",
 		"test": "jest"
