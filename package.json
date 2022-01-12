@@ -1,6 +1,6 @@
 {
 	"name": "@wvbe/enigma-machine",
-	"version": "1.0.0",
+	"version": "1.0.1",
 	"description": "A configurable Enigma cryptographic machine.",
 	"repository": "wvbe/enigma-machine",
 	"author": {

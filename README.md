@@ -23,6 +23,9 @@ machine.encode('A'); // "T"
 ## Great resources
 
 -   http://www.intelligenia.org/downloads/enigvar2.pdf
+- http://www.softdoc.de/mr/de/downloads/files/EnigmaTechnischeDetails.pdf
+- https://www.ilord.com/
+- https://www.mpoweruk.com/enigma.htm
 -   http://www.mlb.co.jp/linux/science/genigma/enigma-referat/node4.html
 -   https://en.wikipedia.org/wiki/Enigma_machine
 -   https://en.wikipedia.org/wiki/Enigma_rotor_details

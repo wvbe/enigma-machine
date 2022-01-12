@@ -1,5 +1,7 @@
 import { Machine } from './src/Machine';
-import { UKW_B, I, II, III } from './src/presets';
+import { UKW_B, I, II, III, UKW_C, V, VIII, VI, Beta } from './src/presets';
+
+const alphabet = 'abcdefghijklmnopqrstuvwxyz';
 
 function createSimpleMachine() {
 	const machine = new Machine();
@@ -82,4 +84,70 @@ describe('Machine #3, testing the plugboard', () => {
 		expect(machine.encode(15, true)).toBe(machineBase.encode(15, true));
 		expect(machine.encode(16, true)).toBe(machineBase.encode(14, true));
 	});
+});
+
+// https://www.cryptomuseum.com/crypto/enigma/msg/p1030681.htm#break
+xit('the Dönitz message', () => {
+	// Walzenlage + ringstellung
+	const fastRotor = VIII.clone(alphabet.indexOf('l'));
+	const middleRotor = VI.clone(alphabet.indexOf('e'));
+	const slowRotor = V.clone(alphabet.indexOf('p'));
+	const greekRotor = Beta.clone(alphabet.indexOf('e'));
+	const reflector = UKW_C.clone();
+
+	// Grundstellung
+	fastRotor.rotation = alphabet.indexOf('z');
+	middleRotor.rotation = alphabet.indexOf('s');
+	slowRotor.rotation = alphabet.indexOf('d');
+	greekRotor.rotation = alphabet.indexOf('c');
+
+	const m = new Machine();
+	m.addRotor(fastRotor);
+	m.addRotor(middleRotor);
+	m.addRotor(slowRotor);
+	m.addRotor(greekRotor);
+	m.setReflector(reflector);
+
+	// Steckern
+	m.plugboard.plug(alphabet.indexOf('a'), alphabet.indexOf('e'));
+	m.plugboard.plug(alphabet.indexOf('b'), alphabet.indexOf('f'));
+	m.plugboard.plug(alphabet.indexOf('c'), alphabet.indexOf('m'));
+	m.plugboard.plug(alphabet.indexOf('d'), alphabet.indexOf('q'));
+	m.plugboard.plug(alphabet.indexOf('h'), alphabet.indexOf('u'));
+	m.plugboard.plug(alphabet.indexOf('j'), alphabet.indexOf('n'));
+	m.plugboard.plug(alphabet.indexOf('l'), alphabet.indexOf('x'));
+	m.plugboard.plug(alphabet.indexOf('p'), alphabet.indexOf('r'));
+	m.plugboard.plug(alphabet.indexOf('s'), alphabet.indexOf('z'));
+	m.plugboard.plug(alphabet.indexOf('v'), alphabet.indexOf('w'));
+
+	const cypherText = `
+			DUHF TETO LANO TCTO UARB BFPM HPHG CZXT DYGA HGUF XGEW KBLK GJWL QXXT
+			GPJJ AVTO CKZF SLPP QIHZ FXOE BWII EKFZ LCLO AQJU LJOY HSSM BBGW HZAN
+			VOII PYRB RTDJ QDJJ OQKC XWDN BBTY VXLY TAPG VEAT XSON PNYN QFUD BBHH
+			VWEP YEYD OHNL XKZD NWRH DUWU JUMW WVII WZXI VIUQ DRHY MNCY EFUA PNHO
+			TKHK GDNP SAKN UAGH JZSM JBMH VTRE QEDG XHLZ WIFU SKDQ VELN MIMI THBH
+			DBWV HDFY HJOQ IHOR TDJD BWXE MEAY XGYQ XOHF DMYU XXNO JAZR SGHP LWML
+			RECW WUTL RTTV LBHY OORG LGOW UXNX HMHY FAAC QEKT HSJW DUHF TETO
+		`
+		.replace(/\s/g, '')
+		.toLowerCase()
+		.slice(8, -8);
+
+	const plainText = cypherText
+		.split('')
+		.map(letter => m.encode(letter))
+		.join('');
+
+	expect(plainText).toBe(
+		`
+				KRKRALLEXXFOLGENDESISTSOFORTBEKANNTZUGEBENXXICHHABEFOLGELNBEBEFEHLERH
+				ALTENXXJANSTERLEDESBISHERIGXNREICHSMARSCHALLSJGOERINGJSETZTDERFUEHRER
+				SIEYHVRRGRZSSADMIRALYALSSEINENNACHFOLGEREINXSCHRIFTLSCHEVOLLMACHTUNTE
+				RWEGSXABSOFORTSOLLENSIESAEMTLICHEMASSNAHMENVERFUEGENYDIESICHAUSDERGEG
+				ENWAERTIGENLAGEERGEBENXGEZXREICHSLEITEIKKTULPEKKJBORMANNJXXOBXDXMMMDU
+				RNHFKSTXKOMXADMXUUUBOOIEXKP
+			`
+			.replace(/\s/g, '')
+			.toLowerCase()
+	);
 });
